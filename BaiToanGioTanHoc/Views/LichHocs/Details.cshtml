@@ -1,0 +1,74 @@
+﻿@model BaiToanGioTanHoc.Models.LichHoc
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>LichHoc</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.NgayHoc)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.NgayHoc)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TietBatDau)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TietBatDau)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TietKetThuc)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TietKetThuc)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.GioTanHoc)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.GioTanHoc)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.LopHocPhan.MaLHP)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.LopHocPhan.MaLHP)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PhongHoc.TenPhong)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PhongHoc.TenPhong)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MaLichHoc }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

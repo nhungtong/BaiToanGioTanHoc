@@ -1,0 +1,528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GiangVien">
+          <Key>
+            <PropertyRef Name="MaGiangVien" />
+          </Key>
+          <Property Name="MaGiangVien" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HoTenGiangVien" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LichHoc">
+          <Key>
+            <PropertyRef Name="MaLichHoc" />
+          </Key>
+          <Property Name="MaLichHoc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaLHP" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="MaPhong" Type="int" Nullable="false" />
+          <Property Name="NgayHoc" Type="date" Nullable="false" />
+          <Property Name="TietBatDau" Type="int" Nullable="false" />
+          <Property Name="TietKetThuc" Type="int" Nullable="false" />
+          <Property Name="GioTanHoc" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="LopDanhNghia">
+          <Key>
+            <PropertyRef Name="MaLopDN" />
+          </Key>
+          <Property Name="MaLopDN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenLopDN" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LopHocPhan">
+          <Key>
+            <PropertyRef Name="MaLHP" />
+          </Key>
+          <Property Name="MaLHP" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="MaMH" Type="int" Nullable="false" />
+          <Property Name="MaLopDN" Type="int" Nullable="false" />
+          <Property Name="SiSo" Type="int" />
+          <Property Name="MaGiangVien" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MonHoc">
+          <Key>
+            <PropertyRef Name="MaMH" />
+          </Key>
+          <Property Name="MaMH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenMH" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhongHoc">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+          </Key>
+          <Property Name="MaPhong" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenPhong" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DayNha" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__LichHoc__MaLHP__6C190EBB">
+          <End Role="LopHocPhan" Type="Self.LopHocPhan" Multiplicity="1" />
+          <End Role="LichHoc" Type="Self.LichHoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHocPhan">
+              <PropertyRef Name="MaLHP" />
+            </Principal>
+            <Dependent Role="LichHoc">
+              <PropertyRef Name="MaLHP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LichHoc__MaPhong__6D0D32F4">
+          <End Role="PhongHoc" Type="Self.PhongHoc" Multiplicity="1" />
+          <End Role="LichHoc" Type="Self.LichHoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhongHoc">
+              <PropertyRef Name="MaPhong" />
+            </Principal>
+            <Dependent Role="LichHoc">
+              <PropertyRef Name="MaPhong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LopHocPha__MaGia__6754599E">
+          <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="1" />
+          <End Role="LopHocPhan" Type="Self.LopHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GiangVien">
+              <PropertyRef Name="MaGiangVien" />
+            </Principal>
+            <Dependent Role="LopHocPhan">
+              <PropertyRef Name="MaGiangVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LopHocPha__MaLop__66603565">
+          <End Role="LopDanhNghia" Type="Self.LopDanhNghia" Multiplicity="1" />
+          <End Role="LopHocPhan" Type="Self.LopHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopDanhNghia">
+              <PropertyRef Name="MaLopDN" />
+            </Principal>
+            <Dependent Role="LopHocPhan">
+              <PropertyRef Name="MaLopDN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LopHocPhan__MaMH__656C112C">
+          <End Role="MonHoc" Type="Self.MonHoc" Multiplicity="1" />
+          <End Role="LopHocPhan" Type="Self.LopHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonHoc">
+              <PropertyRef Name="MaMH" />
+            </Principal>
+            <Dependent Role="LopHocPhan">
+              <PropertyRef Name="MaMH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GiangVien" EntityType="Self.GiangVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LichHoc" EntityType="Self.LichHoc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LopDanhNghia" EntityType="Self.LopDanhNghia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LopHocPhan" EntityType="Self.LopHocPhan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonHoc" EntityType="Self.MonHoc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhongHoc" EntityType="Self.PhongHoc" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__LichHoc__MaLHP__6C190EBB" Association="Self.FK__LichHoc__MaLHP__6C190EBB">
+            <End Role="LopHocPhan" EntitySet="LopHocPhan" />
+            <End Role="LichHoc" EntitySet="LichHoc" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LichHoc__MaPhong__6D0D32F4" Association="Self.FK__LichHoc__MaPhong__6D0D32F4">
+            <End Role="PhongHoc" EntitySet="PhongHoc" />
+            <End Role="LichHoc" EntitySet="LichHoc" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LopHocPha__MaGia__6754599E" Association="Self.FK__LopHocPha__MaGia__6754599E">
+            <End Role="GiangVien" EntitySet="GiangVien" />
+            <End Role="LopHocPhan" EntitySet="LopHocPhan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LopHocPha__MaLop__66603565" Association="Self.FK__LopHocPha__MaLop__66603565">
+            <End Role="LopDanhNghia" EntitySet="LopDanhNghia" />
+            <End Role="LopHocPhan" EntitySet="LopHocPhan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LopHocPhan__MaMH__656C112C" Association="Self.FK__LopHocPhan__MaMH__656C112C">
+            <End Role="MonHoc" EntitySet="MonHoc" />
+            <End Role="LopHocPhan" EntitySet="LopHocPhan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="GiangVien">
+          <Key>
+            <PropertyRef Name="MaGiangVien" />
+          </Key>
+          <Property Name="MaGiangVien" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoTenGiangVien" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LopHocPhans" Relationship="Self.FK__LopHocPha__MaGia__6754599E" FromRole="GiangVien" ToRole="LopHocPhan" />
+        </EntityType>
+        <EntityType Name="LichHoc">
+          <Key>
+            <PropertyRef Name="MaLichHoc" />
+          </Key>
+          <Property Name="MaLichHoc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaLHP" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MaPhong" Type="Int32" Nullable="false" />
+          <Property Name="NgayHoc" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TietBatDau" Type="Int32" Nullable="false" />
+          <Property Name="TietKetThuc" Type="Int32" Nullable="false" />
+          <Property Name="GioTanHoc" Type="Time" Precision="7" />
+          <NavigationProperty Name="LopHocPhan" Relationship="Self.FK__LichHoc__MaLHP__6C190EBB" FromRole="LichHoc" ToRole="LopHocPhan" />
+          <NavigationProperty Name="PhongHoc" Relationship="Self.FK__LichHoc__MaPhong__6D0D32F4" FromRole="LichHoc" ToRole="PhongHoc" />
+        </EntityType>
+        <EntityType Name="LopDanhNghia">
+          <Key>
+            <PropertyRef Name="MaLopDN" />
+          </Key>
+          <Property Name="MaLopDN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenLopDN" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LopHocPhans" Relationship="Self.FK__LopHocPha__MaLop__66603565" FromRole="LopDanhNghia" ToRole="LopHocPhan" />
+        </EntityType>
+        <EntityType Name="LopHocPhan">
+          <Key>
+            <PropertyRef Name="MaLHP" />
+          </Key>
+          <Property Name="MaLHP" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MaMH" Type="Int32" Nullable="false" />
+          <Property Name="MaLopDN" Type="Int32" Nullable="false" />
+          <Property Name="SiSo" Type="Int32" />
+          <Property Name="MaGiangVien" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GiangVien" Relationship="Self.FK__LopHocPha__MaGia__6754599E" FromRole="LopHocPhan" ToRole="GiangVien" />
+          <NavigationProperty Name="LichHocs" Relationship="Self.FK__LichHoc__MaLHP__6C190EBB" FromRole="LopHocPhan" ToRole="LichHoc" />
+          <NavigationProperty Name="LopDanhNghia" Relationship="Self.FK__LopHocPha__MaLop__66603565" FromRole="LopHocPhan" ToRole="LopDanhNghia" />
+          <NavigationProperty Name="MonHoc" Relationship="Self.FK__LopHocPhan__MaMH__656C112C" FromRole="LopHocPhan" ToRole="MonHoc" />
+        </EntityType>
+        <EntityType Name="MonHoc">
+          <Key>
+            <PropertyRef Name="MaMH" />
+          </Key>
+          <Property Name="MaMH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenMH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LopHocPhans" Relationship="Self.FK__LopHocPhan__MaMH__656C112C" FromRole="MonHoc" ToRole="LopHocPhan" />
+        </EntityType>
+        <EntityType Name="PhongHoc">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+          </Key>
+          <Property Name="MaPhong" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenPhong" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DayNha" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LichHocs" Relationship="Self.FK__LichHoc__MaPhong__6D0D32F4" FromRole="PhongHoc" ToRole="LichHoc" />
+        </EntityType>
+        <Association Name="FK__LopHocPha__MaGia__6754599E">
+          <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="1" />
+          <End Role="LopHocPhan" Type="Self.LopHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GiangVien">
+              <PropertyRef Name="MaGiangVien" />
+            </Principal>
+            <Dependent Role="LopHocPhan">
+              <PropertyRef Name="MaGiangVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LichHoc__MaLHP__6C190EBB">
+          <End Role="LopHocPhan" Type="Self.LopHocPhan" Multiplicity="1" />
+          <End Role="LichHoc" Type="Self.LichHoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopHocPhan">
+              <PropertyRef Name="MaLHP" />
+            </Principal>
+            <Dependent Role="LichHoc">
+              <PropertyRef Name="MaLHP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LichHoc__MaPhong__6D0D32F4">
+          <End Role="PhongHoc" Type="Self.PhongHoc" Multiplicity="1" />
+          <End Role="LichHoc" Type="Self.LichHoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhongHoc">
+              <PropertyRef Name="MaPhong" />
+            </Principal>
+            <Dependent Role="LichHoc">
+              <PropertyRef Name="MaPhong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LopHocPha__MaLop__66603565">
+          <End Role="LopDanhNghia" Type="Self.LopDanhNghia" Multiplicity="1" />
+          <End Role="LopHocPhan" Type="Self.LopHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopDanhNghia">
+              <PropertyRef Name="MaLopDN" />
+            </Principal>
+            <Dependent Role="LopHocPhan">
+              <PropertyRef Name="MaLopDN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LopHocPhan__MaMH__656C112C">
+          <End Role="MonHoc" Type="Self.MonHoc" Multiplicity="1" />
+          <End Role="LopHocPhan" Type="Self.LopHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MonHoc">
+              <PropertyRef Name="MaMH" />
+            </Principal>
+            <Dependent Role="LopHocPhan">
+              <PropertyRef Name="MaMH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="GiangViens" EntityType="Self.GiangVien" />
+          <EntitySet Name="LichHocs" EntityType="Self.LichHoc" />
+          <EntitySet Name="LopDanhNghias" EntityType="Self.LopDanhNghia" />
+          <EntitySet Name="LopHocPhans" EntityType="Self.LopHocPhan" />
+          <EntitySet Name="MonHocs" EntityType="Self.MonHoc" />
+          <EntitySet Name="PhongHocs" EntityType="Self.PhongHoc" />
+          <AssociationSet Name="FK__LopHocPha__MaGia__6754599E" Association="Self.FK__LopHocPha__MaGia__6754599E">
+            <End Role="GiangVien" EntitySet="GiangViens" />
+            <End Role="LopHocPhan" EntitySet="LopHocPhans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LichHoc__MaLHP__6C190EBB" Association="Self.FK__LichHoc__MaLHP__6C190EBB">
+            <End Role="LopHocPhan" EntitySet="LopHocPhans" />
+            <End Role="LichHoc" EntitySet="LichHocs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LichHoc__MaPhong__6D0D32F4" Association="Self.FK__LichHoc__MaPhong__6D0D32F4">
+            <End Role="PhongHoc" EntitySet="PhongHocs" />
+            <End Role="LichHoc" EntitySet="LichHocs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LopHocPha__MaLop__66603565" Association="Self.FK__LopHocPha__MaLop__66603565">
+            <End Role="LopDanhNghia" EntitySet="LopDanhNghias" />
+            <End Role="LopHocPhan" EntitySet="LopHocPhans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LopHocPhan__MaMH__656C112C" Association="Self.FK__LopHocPhan__MaMH__656C112C">
+            <End Role="MonHoc" EntitySet="MonHocs" />
+            <End Role="LopHocPhan" EntitySet="LopHocPhans" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities1">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="Model.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="Model.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GiangViens">
+            <EntityTypeMapping TypeName="Model.GiangVien">
+              <MappingFragment StoreEntitySet="GiangVien">
+                <ScalarProperty Name="MaGiangVien" ColumnName="MaGiangVien" />
+                <ScalarProperty Name="HoTenGiangVien" ColumnName="HoTenGiangVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LichHocs">
+            <EntityTypeMapping TypeName="Model.LichHoc">
+              <MappingFragment StoreEntitySet="LichHoc">
+                <ScalarProperty Name="MaLichHoc" ColumnName="MaLichHoc" />
+                <ScalarProperty Name="MaLHP" ColumnName="MaLHP" />
+                <ScalarProperty Name="MaPhong" ColumnName="MaPhong" />
+                <ScalarProperty Name="NgayHoc" ColumnName="NgayHoc" />
+                <ScalarProperty Name="TietBatDau" ColumnName="TietBatDau" />
+                <ScalarProperty Name="TietKetThuc" ColumnName="TietKetThuc" />
+                <ScalarProperty Name="GioTanHoc" ColumnName="GioTanHoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LopDanhNghias">
+            <EntityTypeMapping TypeName="Model.LopDanhNghia">
+              <MappingFragment StoreEntitySet="LopDanhNghia">
+                <ScalarProperty Name="MaLopDN" ColumnName="MaLopDN" />
+                <ScalarProperty Name="TenLopDN" ColumnName="TenLopDN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LopHocPhans">
+            <EntityTypeMapping TypeName="Model.LopHocPhan">
+              <MappingFragment StoreEntitySet="LopHocPhan">
+                <ScalarProperty Name="MaLHP" ColumnName="MaLHP" />
+                <ScalarProperty Name="MaMH" ColumnName="MaMH" />
+                <ScalarProperty Name="MaLopDN" ColumnName="MaLopDN" />
+                <ScalarProperty Name="SiSo" ColumnName="SiSo" />
+                <ScalarProperty Name="MaGiangVien" ColumnName="MaGiangVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonHocs">
+            <EntityTypeMapping TypeName="Model.MonHoc">
+              <MappingFragment StoreEntitySet="MonHoc">
+                <ScalarProperty Name="MaMH" ColumnName="MaMH" />
+                <ScalarProperty Name="TenMH" ColumnName="TenMH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhongHocs">
+            <EntityTypeMapping TypeName="Model.PhongHoc">
+              <MappingFragment StoreEntitySet="PhongHoc">
+                <ScalarProperty Name="MaPhong" ColumnName="MaPhong" />
+                <ScalarProperty Name="TenPhong" ColumnName="TenPhong" />
+                <ScalarProperty Name="DayNha" ColumnName="DayNha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

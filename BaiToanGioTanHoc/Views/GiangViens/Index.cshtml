@@ -1,0 +1,49 @@
+﻿@model IEnumerable<BaiToanGioTanHoc.Models.GiangVien>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @if (User.IsInRole("Administrator"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HoTenGiangVien)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTenGiangVien)
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MaGiangVien }) @Html.Raw(" | ")
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MaGiangVien }) @Html.Raw(" | ")
+                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.MaGiangVien })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿@using BaiToanGioTanHoc.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "THÔNG TIN GIỜ TAN HỌC";
+}
+
+<main aria-labelledby="title" class="d-flex justify-content-center align-items-center vh-100" style="background-color: #f0f8ff;">
+    <div class="card shadow-lg p-4 border-0" style="width: 450px; background-color: #e3f2fd; border-radius: 10px;">
+        <h2 id="title" class="text-center text-primary">@ViewBag.Title</h2>
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4 class="text-center text-dark">ĐĂNG NHẬP HỆ THỐNG</h4>
+                <hr style="border-top: 2px solid #007bff;" />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <table class="table table-borderless">
+                    <tr>
+                        <td class="text-primary font-weight-bold">@Html.LabelFor(m => m.Email)</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control border-primary" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-primary font-weight-bold">@Html.LabelFor(m => m.Password)</td>
+                        <td>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control border-primary" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="form-check">
+                                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input" })
+                                @Html.LabelFor(m => m.RememberMe, new { @class = "form-check-label text-primary" })
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            <input type="submit" value="Đăng Nhập" class="btn btn-primary w-100" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        </section>
+    </div>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

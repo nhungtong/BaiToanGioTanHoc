@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BaiToanGioTanHoc.Models.PhongHoc>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenPhong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DayNha)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayNha)
+            </td>
+            <td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaPhong }) @Html.Raw(" | ")
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MaPhong }) @Html.Raw(" | ")
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.MaPhong })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Upload Excel";
+}
+<h2>Upload Excel</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form action="@Url.Action("UploadExcel", "Excel")" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required />
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
